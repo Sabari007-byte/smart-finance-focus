@@ -6,6 +6,7 @@ import CarbonFootprint from "@/components/Dashboard/CarbonFootprint";
 import RewardsOverview from "@/components/Dashboard/RewardsOverview";
 import AIInsights from "@/components/Dashboard/AIInsights";
 import RecentExpenses from "@/components/Dashboard/RecentExpenses";
+import SmartSuggestions from "@/components/Dashboard/SmartSuggestions";
 import AddExpenseForm from "@/components/AddExpenseForm";
 
 const Dashboard = () => {
@@ -32,6 +33,10 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <RecentExpenses />
         <AIInsights />
+      </div>
+      
+      <div className="mt-6">
+        <SmartSuggestions />
       </div>
     </div>
   );

@@ -86,10 +86,12 @@ const Budget = () => {
                       style={{
                         backgroundColor: 'hsl(var(--secondary))',
                       }}
-                      indicatorStyle={{
-                        background: getCategoryColor(cat.category),
-                      }}
                     />
+                    <style jsx>{`
+                      .progress-bar {
+                        background-color: ${getCategoryColor(cat.category)};
+                      }
+                    `}</style>
                   </div>
                 ))}
               </div>

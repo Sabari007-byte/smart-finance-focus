@@ -1,4 +1,3 @@
-
 import { User, Expense, Budget, Challenge, AIInsight, ExpenseCategory } from '../types';
 
 // Carbon impact per dollar for each category
@@ -196,4 +195,96 @@ export const mockCategoryDistribution = () => {
 
 export const getMockExpenses = (): Expense[] => {
   return generateMockExpenses();
+};
+
+// Add this function to generate previous month expenses
+export const getPreviousMonthExpenses = (): Expense[] => {
+  const now = new Date();
+  const prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  
+  const userId = mockUser.id;
+  const categories: ExpenseCategory[] = [
+    'food', 'transportation', 'housing', 'utilities', 'healthcare',
+    'entertainment', 'clothing', 'education', 'personal', 'other'
+  ];
+  
+  // Generate between 30-40 expenses for last month
+  const numExpenses = 30 + Math.floor(Math.random() * 10);
+  const expenses: Expense[] = [];
+  
+  for (let i = 0; i < numExpenses; i++) {
+    const category = categories[Math.floor(Math.random() * categories.length)];
+    const day = 1 + Math.floor(Math.random() * 28); // Random day in the month
+    const date = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), day);
+    
+    // Base amounts for different categories
+    let baseAmount = 0;
+    switch (category) {
+      case 'food':
+        baseAmount = 100 + Math.floor(Math.random() * 400);
+        break;
+      case 'transportation':
+        baseAmount = 50 + Math.floor(Math.random() * 200);
+        break;
+      case 'housing':
+        baseAmount = 5000 + Math.floor(Math.random() * 3000);
+        break;
+      case 'utilities':
+        baseAmount = 500 + Math.floor(Math.random() * 1000);
+        break;
+      case 'healthcare':
+        baseAmount = 200 + Math.floor(Math.random() * 1000);
+        break;
+      case 'entertainment':
+        baseAmount = 100 + Math.floor(Math.random() * 500);
+        break;
+      default:
+        baseAmount = 50 + Math.floor(Math.random() * 300);
+    }
+    
+    const amount = baseAmount;
+    const carbonImpact = amount * CARBON_WEIGHTS[category];
+    
+    expenses.push({
+      id: `prev-exp-${i}`,
+      userId,
+      amount,
+      category,
+      date: date.toISOString(),
+      notes: `Last month ${category} expense`,
+      carbonImpact
+    });
+  }
+  
+  return expenses;
+};
+
+// Generate AI insights based on spending patterns
+export const generateMockInsights = (): AIInsight[] => {
+  return [
+    {
+      id: 'insight-1',
+      type: 'warning',
+      message: 'You spent 25% more on dining this month than last month.',
+      date: new Date().toISOString()
+    },
+    {
+      id: 'insight-2',
+      type: 'tip',
+      message: 'Consider using public transportation to reduce your carbon footprint.',
+      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: 'insight-3',
+      type: 'achievement',
+      message: 'You stayed under your entertainment budget for 3 months in a row!',
+      date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: 'insight-4',
+      type: 'warning',
+      message: 'You might overspend ₹1500 on shopping this month based on current trends.',
+      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+    }
+  ];
 };

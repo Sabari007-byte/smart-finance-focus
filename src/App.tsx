@@ -13,6 +13,7 @@ import Budget from "./pages/Budget";
 import Carbon from "./pages/Carbon";
 import Rewards from "./pages/Rewards";
 import Settings from "./pages/Settings";
+import Insights from "./pages/Insights";
 import Sidebar from "./components/Sidebar";
 import { useIsMobile } from "./hooks/use-mobile";
 import { cn } from "./lib/utils";
@@ -62,6 +63,11 @@ const App = () => (
           <Route path="/carbon" element={
             <AppLayout>
               <Carbon />
+            </AppLayout>
+          } />
+          <Route path="/insights" element={
+            <AppLayout>
+              <Insights />
             </AppLayout>
           } />
           <Route path="/rewards" element={

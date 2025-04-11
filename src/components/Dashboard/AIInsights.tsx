@@ -19,24 +19,33 @@ const AIInsights = () => {
     }
   };
 
+  // Get only the most recent 5 insights
+  const recentInsights = insights.slice(0, 5);
+
   return (
     <DashboardCard title="AI Insights" icon={<Brain className="h-5 w-5" />}>
       <div className="space-y-3">
-        {insights.map((insight) => (
-          <div key={insight.id} className="border rounded-lg p-3">
-            <div className="flex gap-3">
-              <div className="mt-0.5">
-                {getInsightIcon(insight.type)}
-              </div>
-              <div>
-                <p className="text-sm">{insight.message}</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {new Date(insight.date).toLocaleDateString()}
-                </p>
+        {recentInsights.length > 0 ? (
+          recentInsights.map((insight) => (
+            <div key={insight.id} className="border rounded-lg p-3">
+              <div className="flex gap-3">
+                <div className="mt-0.5">
+                  {getInsightIcon(insight.type)}
+                </div>
+                <div>
+                  <p className="text-sm">{insight.message}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {new Date(insight.date).toLocaleDateString()}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            No insights available yet. Add more expenses to get personalized insights.
+          </p>
+        )}
       </div>
     </DashboardCard>
   );

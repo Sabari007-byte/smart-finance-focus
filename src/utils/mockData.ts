@@ -116,6 +116,70 @@ export const mockChallenges: Challenge[] = [
     points: 60,
     type: 'daily',
     completed: true
+  },
+  {
+    id: 'challenge-5',
+    title: 'Zero Food Waste Week',
+    description: 'Plan meals and use leftovers to avoid food waste for a week',
+    points: 80,
+    type: 'eco',
+    completed: false
+  },
+  {
+    id: 'challenge-6',
+    title: 'Utility Reduction',
+    description: 'Reduce your electricity usage by 10% this month',
+    points: 120,
+    type: 'eco',
+    completed: false
+  },
+  {
+    id: 'challenge-7',
+    title: 'Digital Receipt Only',
+    description: 'Request digital receipts instead of paper for 10 transactions',
+    points: 40,
+    type: 'eco',
+    completed: false
+  },
+  {
+    id: 'challenge-8',
+    title: 'Budget Master',
+    description: 'Stay under budget in all categories for a full month',
+    points: 150,
+    type: 'budget',
+    completed: false
+  },
+  {
+    id: 'challenge-9',
+    title: 'Thrift Shopping',
+    description: 'Buy second-hand items instead of new for your next 3 purchases',
+    points: 70,
+    type: 'eco',
+    completed: false
+  },
+  {
+    id: 'challenge-10',
+    title: 'Weekend Saver',
+    description: 'Limit weekend spending to ₹500 for one weekend',
+    points: 60,
+    type: 'budget',
+    completed: false
+  },
+  {
+    id: 'challenge-11',
+    title: 'Cash Only Week',
+    description: 'Use only cash for all transactions for one week',
+    points: 90,
+    type: 'budget',
+    completed: false
+  },
+  {
+    id: 'challenge-12',
+    title: 'Eco-friendly Transport Day',
+    description: 'Use walking, cycling, or public transport for an entire day',
+    points: 30,
+    type: 'eco',
+    completed: false
   }
 ];
 

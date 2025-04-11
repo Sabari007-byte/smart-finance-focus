@@ -30,6 +30,7 @@ interface AppContextType {
   getCarbonImpact: () => number;
   getBudgetSuggestions: () => { category: ExpenseCategory; suggestion: number }[];
   updateBudgetCategory: (category: ExpenseCategory, limit: number) => void;
+  addNewChallenge: (challenge: Omit<Challenge, 'id'>) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -121,6 +122,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     toast.success('Challenge completed! Points awarded.');
   };
 
+  const addNewChallenge = (challenge: Omit<Challenge, 'id'>) => {
+    const newChallenge: Challenge = {
+      ...challenge,
+      id: `challenge-${Date.now()}`
+    };
+    
+    setChallenges(prev => [...prev, newChallenge]);
+    toast.success('New challenge added!');
+  };
+
   const updateBudgetCategory = (category: ExpenseCategory, limit: number) => {
     setBudget(prevBudget => {
       const updatedCategories = prevBudget.categories.map(cat => 
@@ -157,7 +168,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       getBudgetProgress,
       getCarbonImpact,
       getBudgetSuggestions,
-      updateBudgetCategory
+      updateBudgetCategory,
+      addNewChallenge
     }}>
       {children}
     </AppContext.Provider>

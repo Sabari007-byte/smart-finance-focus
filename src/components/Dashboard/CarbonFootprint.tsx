@@ -3,9 +3,12 @@ import { useApp } from "@/context/AppContext";
 import DashboardCard from "./DashboardCard";
 import { Leaf } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const CarbonFootprint = () => {
   const { getCarbonImpact, user } = useApp();
+  const navigate = useNavigate();
   const carbonImpact = getCarbonImpact();
   
   // Calculate a score out of 100, lower is better for carbon impact
@@ -25,6 +28,10 @@ const CarbonFootprint = () => {
     if (score >= 60) return "text-green-400";
     if (score >= 40) return "text-yellow-500";
     return "text-red-500";
+  };
+
+  const handleOffsetCarbon = () => {
+    navigate("/carbon");
   };
 
   return (
@@ -48,6 +55,14 @@ const CarbonFootprint = () => {
           </div>
           <Progress value={Math.min((carbonImpact / 200) * 100, 100)} className="h-2" />
         </div>
+
+        <Button 
+          variant="outline" 
+          className="w-full text-eco-green border-eco-green hover:bg-eco-light"
+          onClick={handleOffsetCarbon}
+        >
+          Offset Carbon
+        </Button>
       </div>
     </DashboardCard>
   );

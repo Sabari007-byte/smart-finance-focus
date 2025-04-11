@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { User, Expense, Budget, Challenge, AIInsight, ExpenseCategory } from '../types';
 import { 
@@ -30,6 +29,7 @@ interface AppContextType {
   getBudgetProgress: () => number;
   getCarbonImpact: () => number;
   getBudgetSuggestions: () => { category: ExpenseCategory; suggestion: number }[];
+  updateBudgetCategory: (category: ExpenseCategory, limit: number) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -43,21 +43,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [insights, setInsights] = useState<AIInsight[]>(generateMockInsights());
   const [predictedSpending, setPredictedSpending] = useState<Record<ExpenseCategory, number>>({} as Record<ExpenseCategory, number>);
 
-  // Generate insights when expenses change
   useEffect(() => {
-    // Generate AI insights based on expense data
     const newInsights = generateInsights(expenses, previousMonthExpenses);
     
-    // Only update if we have new insights
     if (newInsights.length > 0) {
       setInsights(prevInsights => {
-        // Combine with existing insights, but limit total to 10
         const combined = [...newInsights, ...prevInsights];
         return combined.slice(0, 10);
       });
     }
     
-    // Update predicted spending
     const predictions = predictEndOfMonthSpending(expenses, previousMonthExpenses);
     setPredictedSpending(predictions);
   }, [expenses, previousMonthExpenses]);
@@ -126,6 +121,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     toast.success('Challenge completed! Points awarded.');
   };
 
+  const updateBudgetCategory = (category: ExpenseCategory, limit: number) => {
+    setBudget(prevBudget => {
+      const updatedCategories = prevBudget.categories.map(cat => 
+        cat.category === category ? { ...cat, limit } : cat
+      );
+      
+      const newTotalLimit = updatedCategories.reduce((sum, cat) => sum + cat.limit, 0);
+      
+      return {
+        ...prevBudget,
+        categories: updatedCategories,
+        totalLimit: newTotalLimit
+      };
+    });
+    
+    toast.success(`Budget for ${category} updated successfully`);
+  };
+
   return (
     <AppContext.Provider value={{
       user,
@@ -143,7 +156,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       getTotalSpent,
       getBudgetProgress,
       getCarbonImpact,
-      getBudgetSuggestions
+      getBudgetSuggestions,
+      updateBudgetCategory
     }}>
       {children}
     </AppContext.Provider>

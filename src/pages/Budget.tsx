@@ -85,13 +85,10 @@ const Budget = () => {
                       className="h-2"
                       style={{
                         backgroundColor: 'hsl(var(--secondary))',
-                      }}
+                        // Apply the category color for the progress bar
+                        '--progress-foreground': getCategoryColor(cat.category),
+                      } as React.CSSProperties}
                     />
-                    <style jsx>{`
-                      .progress-bar {
-                        background-color: ${getCategoryColor(cat.category)};
-                      }
-                    `}</style>
                   </div>
                 ))}
               </div>

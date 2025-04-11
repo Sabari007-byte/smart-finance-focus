@@ -84,8 +84,7 @@ const Budget = () => {
                       value={cat.percentage} 
                       className="h-2"
                       style={{
-                        background: 'hsl(var(--secondary))',
-                        '--tw-bg-opacity': 0.5,
+                        backgroundColor: 'hsl(var(--secondary))',
                       }}
                       indicatorStyle={{
                         background: getCategoryColor(cat.category),

@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useApp } from "@/context/AppContext";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell } from 'recharts';
 import { mockCarbonFootprint, mockCategoryDistribution } from "@/utils/mockData";
 import { getCategoryColor } from "@/utils/categoryIcons";
 import { Button } from "@/components/ui/button";
@@ -115,7 +115,11 @@ const Carbon = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip 
-                  formatter={(value) => [`${(value * 0.2).toFixed(1)} kg CO₂`, 'Carbon Impact']}
+                  formatter={(value) => {
+                    // Convert value to number explicitly to avoid type error
+                    const numValue = Number(value);
+                    return [`${(numValue * 0.2).toFixed(1)} kg CO₂`, 'Carbon Impact'];
+                  }}
                 />
                 <Legend />
                 <Bar 
